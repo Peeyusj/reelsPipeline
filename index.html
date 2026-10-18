@@ -229,8 +229,8 @@
     <h1>A video factory<br>that sends<br>no invoices.</h1>
     <p class="hero-sub">
       One person's Hinglish Shorts studio: <strong>three AI voice engines &mdash; or your own
-      recorded voice</strong>, <strong>three AI image backends</strong>, one ffmpeg assembly line &mdash;
-      built entirely on free tiers, a borrowed GPU, and a laptop.
+      recorded voice</strong>, <strong>three AI image backends</strong> that rotate and fall back on their own,
+      one ffmpeg assembly line &mdash; built entirely on free tiers, a borrowed GPU, and a laptop.
       Hover a part for a quick note, click one to open it up.
     </p>
 
@@ -252,8 +252,8 @@
 
             <rect x="248" y="24" width="128" height="72" class="box-fill box-line"/>
             <text x="312" y="55" text-anchor="middle" class="box-title" style="font-size:15px">PIPELINE</text>
-            <text x="312" y="72" text-anchor="middle" class="box-mono-dim">3 subprocess</text>
-            <text x="312" y="86" text-anchor="middle" class="box-mono-dim">stages</text>
+            <text x="312" y="72" text-anchor="middle" class="box-mono-dim">3 core stages</text>
+            <text x="312" y="86" text-anchor="middle" class="box-mono-dim">+ optional CTA</text>
 
             <path class="pipe-body" d="M376,60 H496" marker-end="url(#arrowHero)"/>
             <path class="pipe-flow" d="M376,60 H496"/>
@@ -288,7 +288,9 @@
       <h2>The Line</h2>
     </div>
     <p class="sheet-sub">
-      A typed script becomes a rendered Short through three subprocess stages, no more.
+      A typed script becomes a rendered Short through three subprocess stages &mdash; voice,
+      captions, stitch &mdash; plus one optional side-step that can never fail the render:
+      a like-and-follow prompt painted by a headless browser.
       A second, optional line plans and paints AI scene images in parallel, then hands
       the result back in as just another sticker &mdash; the render stage never learns
       it came from an LLM.
@@ -297,7 +299,7 @@
 
     <div class="diagram-scroll">
       <figure>
-        <svg viewBox="0 0 1700 620" width="1700" height="620" role="img" aria-label="Schematic of the rendering pipeline: a script enters the voice stage, which offers four narration valves (edge and kokoro running locally, parler borrowed from a Colab GPU, or a recorded take transcribed by Whisper instead of synthesized); output feeds the captions stage, which can be bypassed entirely when captions are switched off; stickers, sound effects, music, and intro or outro clips merge in as inlets before the stitch stage, which produces the final MP4. A parallel branch below sends the same script to Groq for planning, then through a manifold of three image providers tried in automatic fallback order, feeding finished images back in as an inlet.">
+        <svg viewBox="0 0 1700 620" width="1700" height="620" role="img" aria-label="Schematic of the rendering pipeline: a script enters the voice stage, which offers four narration valves (edge and kokoro running locally, parler borrowed from a Colab GPU, or a recorded take transcribed by Whisper instead of synthesized); output feeds the captions stage, which can be bypassed entirely when captions are switched off; an optional like-and-follow prompt, painted by a headless browser, drops in beside it before the stitch stage; stickers, sound effects, music, and intro or outro clips merge in as inlets before the stitch stage, which produces the final MP4. A parallel branch below sends the same script to Groq for planning, then through a manifold of three image providers tried in automatic fallback order (the first, Cloudflare, rotating across up to five free accounts), feeding finished images back in as an inlet.">
           <defs>
             <marker id="arrowMain" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
               <path d="M0,0 L9,4.5 L0,9 Z" fill="var(--ink)" opacity="0.5"/>
@@ -343,6 +345,17 @@
           <path class="pipe-body" d="M850,180 H1000"/>
           <path class="pipe-flow" d="M850,180 H1000"/>
 
+          <!-- optional like / follow prompt: painted by headless Chrome, overlaid at stitch -->
+          <g class="hotspot"><title>Optional and never fatal. A headless browser paints a like/follow animation frame by frame onto a transparent background; stitch overlays it just before the captions go on. Any failure &mdash; no Chrome, a too-short video, a landscape canvas &mdash; skips the prompt with a log line and the render carries on.</title>
+            <rect x="866" y="62" width="128" height="68" class="box-fill box-line dashed"/>
+            <text x="930" y="85" text-anchor="middle" class="box-title" style="font-size:15px">CTA PROMPT</text>
+            <text x="930" y="103" text-anchor="middle" class="box-mono-dim">like / follow</text>
+            <text x="930" y="118" text-anchor="middle" class="box-mono-dim">optional</text>
+          </g>
+          <path class="pipe-body" d="M930,130 V170"/>
+          <path class="pipe-flow slow" d="M930,130 V170"/>
+          <circle cx="930" cy="180" r="4.5" fill="var(--ink)" opacity="0.45"/>
+
           <g class="hotspot"><title>Everything optional funnels in here: stickers, sound effects, music, an intro/outro clip, and finished AI images &mdash; indistinguishable from a manual upload by this point.</title>
             <rect x="835" y="300" width="250" height="96" class="box-fill box-line"/>
             <text x="960" y="326" text-anchor="middle" class="box-title" style="font-size:15px">INLETS</text>
@@ -354,13 +367,13 @@
           <path class="pipe-flow slow" d="M960,300 V190"/>
           <circle cx="960" cy="180" r="4.5" fill="var(--ink)" opacity="0.45"/>
 
-          <g class="hotspot"><title>The only stage that touches ffmpeg. Stacks or drops the gameplay clip, overlays stickers and transitions, burns captions last, mixes narration/music/SFX with no ducking beyond a low static bed.</title>
+          <g class="hotspot"><title>The only stage that touches ffmpeg. Stacks or drops the gameplay clip, overlays stickers and transitions, adds the optional like/follow prompt, burns captions last, mixes narration/music/SFX with no ducking beyond a low static bed.</title>
             <rect x="1000" y="105" width="240" height="150" class="box-fill box-line"/>
             <text x="1120" y="140" text-anchor="middle" class="box-title" style="font-size:22px">STITCH</text>
             <text x="1120" y="162" text-anchor="middle" class="box-mono-dim">ffmpeg &mdash; zero prior</text>
             <text x="1120" y="178" text-anchor="middle" class="box-mono-dim">stages touch it</text>
             <text x="1120" y="200" text-anchor="middle" class="box-mono-dim">transitions &middot; Ken Burns</text>
-            <text x="1120" y="216" text-anchor="middle" class="box-mono-dim">outro card &middot; mix</text>
+            <text x="1120" y="216" text-anchor="middle" class="box-mono-dim">outro &middot; CTA &middot; mix</text>
           </g>
 
           <path class="pipe-body" d="M1240,180 H1380" marker-end="url(#arrowMain)"/>
@@ -396,15 +409,18 @@
           <path class="pipe-body" d="M340,425 H460"/>
           <path class="pipe-flow alt" d="M340,425 H460"/>
 
-          <g class="hotspot"><title>Three interchangeable renderers. A failure on one &mdash; a spent quota, a dead tunnel &mdash; falls through to the next instead of failing the batch.</title>
+          <g class="hotspot"><title>Three interchangeable renderers, tried in order. Cloudflare first rotates across up to five free accounts; only when all are spent or throttled does a failure &mdash; a spent quota, a dead tunnel &mdash; fall through to the next provider instead of failing the batch. A one-off safety-filter flag hands just that image onward without demoting the provider.</title>
             <rect x="460" y="365" width="270" height="170" class="box-fill box-line"/>
             <text x="595" y="392" text-anchor="middle" class="box-title" style="font-size:15px">IMAGE PROVIDERS</text>
             <polygon points="480,412 490,407 490,417" class="tag-accent"/>
             <text x="498" y="416" class="box-mono">cloudflare &mdash; tried first</text>
+            <text x="498" y="429" class="box-mono-dim">rotates up to 5 accounts</text>
             <polygon points="480,442 490,437 490,447" class="tag-accent"/>
             <text x="498" y="446" class="box-mono">pollinations &mdash; then</text>
+            <text x="498" y="459" class="box-mono-dim">no key &middot; slower per image</text>
             <polygon points="480,472 490,467 490,477" style="fill:var(--accent-2)"/>
             <text x="498" y="476" class="box-mono">colab &middot; flux &mdash; last</text>
+            <text x="498" y="489" class="box-mono-dim">needs your session running</text>
             <path d="M700,410 C 725,425 725,455 700,470" class="arrow-line dashed" opacity="0.5"/>
             <text x="595" y="516" text-anchor="middle" class="box-mono-dim">auto-fallback on any failure</text>
           </g>
@@ -426,22 +442,28 @@
         <div class="body">Plain text, usually Hinglish &mdash; Reddit/AITA stories, dark-fact hooks, "did you know" openers. <b>[excited]...[/excited]</b>, <b>[sad]</b>, and <b>[calm]</b> tags can be inlined; they're stripped before narration and only nudge rate/pitch for that stretch, never spoken aloud.</div>
       </details>
       <details class="inspector-card"><summary><h4>Voice</h4><span class="plus">+</span></summary>
-        <div class="body">All four sources emit the exact same shape: <b>audio.mp3</b> plus a <b>timestamps.json</b> listing every word's start/end in seconds. edge-tts streams Microsoft's free "Read Aloud" voices and gets word timing free from the stream itself. Kokoro-82M does the identical job on your CPU, no network call at all. Parler is the one that needs real horsepower &mdash; a heavier, more expressive model only a Colab GPU can run. <b>Recorded</b> skips synthesis altogether: your mic take is auto-trimmed, loudness-matched, and transcribed by Whisper for the same per-word timing &mdash; and the transcript stays editable, with corrections re-mapped onto the original timings rather than re-transcribed.</div>
+        <div class="body">All four sources emit the exact same shape: <b>audio.mp3</b> plus a <b>timestamps.json</b> listing every word's start/end in seconds. edge-tts streams Microsoft's free "Read Aloud" voices and gets word timing free from the stream itself; it retries a flaky stream three times and, if Microsoft has rotated its login token (it has), names the exact upgrade that fixes it instead of a cryptic "no audio". Kokoro-82M does the identical job on your CPU, no network call at all. Parler is the one that needs real horsepower &mdash; a heavier, more expressive model only a Colab GPU can run. <b>Recorded</b> skips synthesis altogether: your mic take is auto-trimmed, loudness-matched, and transcribed by Whisper for the same per-word timing &mdash; and the transcript stays editable, with corrections re-mapped onto the original timings rather than re-transcribed.</div>
       </details>
       <details class="inspector-card"><summary><h4>Captions</h4><span class="plus">+</span></summary>
-        <div class="body">Groups words into short lines (2&ndash;7 words, your choice) breaking at natural pauses rather than a fixed count, then writes a styled <b>.ass</b> subtitle file &mdash; position, font, word-highlight animation all configurable. Flip captions off and this stage doesn't just hide its output, it never runs.</div>
+        <div class="body">Groups words into short lines (2&ndash;7 words, your choice) breaking at natural pauses rather than a fixed count, then writes a styled <b>.ass</b> subtitle file. There are seventeen style presets (clean sans through horror and retro-VHS), four sizes, three positions, and seven word-highlight animations &mdash; a colour sweep by default, plus pop, shake, glow, bounce and a typewriter reveal. Size is independent of style, and on a full-frame video with no gameplay clip it defaults to extra large because nothing else shares the screen. Flip captions off and this stage doesn't just hide its output, it never runs.</div>
+      </details>
+      <details class="inspector-card"><summary><h4>CTA prompt</h4><span class="plus">+</span></summary>
+        <div class="body">An optional 2&ndash;4 second "like &amp; follow" animation, on by default and never mandatory &mdash; eight styles, from a finger tapping a Subscribe button to a comic burst or a "loading Part 2" bar stuck at 99%. It is drawn by <b>headless Chrome, not ffmpeg</b>: every frame is a pure function of time, screenshotted onto a transparent background and cached as a PNG sequence, so stitch only has to overlay it &mdash; before the captions, which stay on top. When it appears and where it sits are chosen for you (about 60% in, at a pause between sentences, clear of the captions). <b>It can never fail a render:</b> no Chrome, a too-short video, a landscape canvas &mdash; the prompt is skipped with a log line and everything else renders as before.<br><br><b>Newest stage:</b> verified by static checks and a stitch dry-run; its first full end-to-end render is still to be confirmed.</div>
       </details>
       <details class="inspector-card"><summary><h4>Inlets</h4><span class="plus">+</span></summary>
         <div class="body">Every optional layer funnels in right before assembly: uploaded stickers, an attached sound effect per sticker, a background music bed, a video intro/outro clip, and &mdash; if the AI-image branch ran &mdash; finished PNGs. By this point they're all just filenames in one folder; nothing downstream knows or cares where an image came from.</div>
       </details>
       <details class="inspector-card"><summary><h4>Stitch</h4><span class="plus">+</span></summary>
-        <div class="body">The only stage that touches ffmpeg. Cover-crops the gameplay clip (or drops it for full-screen mode), stacks it under the caption band, overlays every sticker with its own slide-in or Ken Burns zoom, crossfades between AI images, burns captions on last, then mixes narration/music/SFX &mdash; no sidechain ducking, just a deliberately low static bed volume.</div>
+        <div class="body">The only stage that touches ffmpeg. Cover-crops the gameplay clip (or drops it for full-screen mode), stacks it under the caption band, overlays every sticker with its own slide-in or Ken Burns zoom, crossfades between AI images, overlays the like/follow prompt if there is one, burns captions on last, then mixes narration/music/SFX (the prompt's own sound included) &mdash; no sidechain ducking, just a deliberately low static bed volume.</div>
       </details>
       <details class="inspector-card"><summary><h4>Groq</h4><span class="plus">+</span></summary>
         <div class="body">One hosted LLM call plans the entire AI-image batch: how many images, what each shows, and a short verbatim quote of where it begins &mdash; that quote is then matched against the real measured transcript, so timing comes from the actual audio, not the model's arithmetic.</div>
       </details>
       <details class="inspector-card"><summary><h4>Image providers</h4><span class="plus">+</span></summary>
-        <div class="body">Cloudflare Workers AI first (fast, ~95 free images/day), Pollinations next (no signup, no cap, slower per image), your own Colab GPU running FLUX.2 last. Any one of the three can also be picked directly instead of the automatic chain, per batch.</div>
+        <div class="body">Cloudflare Workers AI first (fast, up to four images in parallel, ~95 free images/day <i>per account</i> on the default FLUX.2 klein-4b model), Pollinations next (no signup, no cap, slower per image), your own Colab GPU running FLUX.2 last. Any one of the three can also be picked directly instead of the automatic chain, per batch &mdash; and an opt-in HQ Cloudflare entry (FLUX.2 klein-9b, ~7 free images/day) exists for small batches, deliberately kept out of the automatic chain.</div>
+      </details>
+      <details class="inspector-card"><summary><h4>Failure handling</h4><span class="plus">+</span></summary>
+        <div class="body"><b>Accounts:</b> Cloudflare can run on up to five free accounts at once. Requests go round-robin; an account that hits a per-minute 429 sits out about 30&nbsp;seconds and rejoins, one that spends its day sits out an hour, and if every account is cooling off the call waits for the soonest rather than failing. Only when all are spent does the chain move on to Pollinations.<br><br><b>Safety filter:</b> Cloudflare sometimes flags harmless scenes, so a flagged image is re-seeded up to three times, then handed to the next provider for that one image &mdash; without demoting Cloudflare for the rest of the batch.<br><br><b>Partial batches:</b> every image that did render is kept, and the slots that didn't are listed with their time windows &mdash; left empty by default so you can drop in your own picture, or covered with repeats if you tick the box.</div>
       </details>
       <details class="inspector-card"><summary><h4>Output</h4><span class="plus">+</span></summary>
         <div class="body">final.mp4, encoded once at 30fps / CRF 20, in either 1080&times;1920 (Shorts) or 1920&times;1080 (landscape). Nothing about assembly changes between the two shapes &mdash; the frame size is just a number passed down the same pipe.</div>
@@ -467,13 +489,13 @@
         <div class="supply-kicker">01 &middot; LOCAL</div>
         <h3>Your machine</h3>
         <div class="supply-list">
-          <b>edge-tts</b> &middot; <b>Kokoro-82M</b> (CPU) &middot; <b>ffmpeg</b> &mdash;
-          runs entirely on your own laptop, no network call for two of the three voices,
-          and none at all for assembly.
+          <b>edge-tts</b> &middot; <b>Kokoro-82M</b> (CPU) &middot; <b>ffmpeg</b> &middot;
+          <b>headless Chrome</b> (the like/follow prompt) &mdash; all run on your own laptop.
+          Kokoro and ffmpeg never touch the network; edge-tts only calls Microsoft's free endpoint.
         </div>
         <details class="supply-meter">
           <summary><span class="k">LIMIT</span><span class="v">none &mdash; click for detail</span></summary>
-          <div class="body">Kokoro-82M is Apache-2.0 licensed and runs CPU-only &mdash; no GPU, no API key, no rate limit, ever. edge-tts is an unofficial client of Microsoft's free "Read Aloud" endpoint; the only real risk is Microsoft changing that endpoint underneath it.</div>
+          <div class="body">Kokoro-82M is Apache-2.0 licensed and runs CPU-only &mdash; no GPU, no API key, no rate limit, ever. edge-tts is an unofficial client of Microsoft's free "Read Aloud" endpoint; the only real risk is Microsoft changing that endpoint underneath it &mdash; which has happened once already, so the app now retries and names the fix (upgrade edge-tts).</div>
         </details>
         <div class="supply-cost"><span class="dot"></span>$0.00 &middot; unlimited runs</div>
       </div>
@@ -500,8 +522,8 @@
           and <b>Groq</b> (LLM planning) &mdash; a hosted call, nothing to keep open.
         </div>
         <details class="supply-meter">
-          <summary><span class="k">LIMIT</span><span class="v">~95 img/day &middot; click for detail</span></summary>
-          <div class="body">Cloudflare's free tier gives roughly 95 images/day on the higher-quality model. Pollinations has no daily cap but is slower per image and can't hold a saved character's reference. Groq caps at 8,000 tokens/minute on its free model &mdash; the pipeline paces its own requests to stay under that automatically.</div>
+          <summary><span class="k">LIMIT</span><span class="v">~95 img/day per account &middot; click for detail</span></summary>
+          <div class="body">Cloudflare's free tier is 10,000 neurons a day <i>per account</i> &mdash; roughly 95 images on the default FLUX.2 klein-4b model, and only about 7 on the pricier klein-9b. Each extra free account (up to five) brings its own allowance, and the pipeline rotates across them automatically. Pollinations has no daily cap but is slower per image and can't hold a saved character's reference. Groq caps at 8,000 tokens/minute on its free model &mdash; the pipeline paces its own requests to stay under that automatically.</div>
         </details>
         <div class="supply-cost"><span class="dot"></span>$0.00 &middot; quota, not a session</div>
       </div>
@@ -512,7 +534,8 @@
       patience, not money &mdash; a Colab session needs a human to start it and can vanish
       mid-batch. That single risk is exactly why the image pipeline no longer depends on Colab
       alone: Cloudflare and Pollinations exist specifically so one dead tunnel can't stall
-      an entire batch of images.
+      an entire batch of images &mdash; and why Cloudflare itself can spread across several
+      free accounts, so one spent daily allowance doesn't end its turn either.
     </div>
   </div>
 </section>
@@ -673,6 +696,86 @@
         </details>
       </div>
     </div>
+
+    <div class="decision-row">
+      <div class="decision-index mono">09</div>
+      <div class="decision-body">
+        <div class="chip-line">
+          <div class="chip cause">Cloudflare's free allowance is one fixed pot per account</div>
+          <div class="chip-arrow">&rarr;</div>
+          <div class="chip break">A big batch drained the day's pot, and bursts tripped per-minute 429s</div>
+          <div class="chip-arrow">&rarr;</div>
+          <div class="chip fix">Rotate across up to five free accounts, benching each only as long as it needs</div>
+        </div>
+        <details class="more-detail"><summary>more</summary>
+          <div class="body">Every Cloudflare account carries its own 10,000 neurons a day, so a second and third free account multiply the budget instead of sharing it. Extra accounts are optional env-var pairs (<span class="mono">CLOUDFLARE_ACCOUNT_ID_2</span> / <span class="mono">CLOUDFLARE_API_TOKEN_2</span>, up to <span class="mono">_5</span>); with just one, nothing changes. Requests go round-robin across the healthy accounts. A 429 benches only that account for about 30 seconds (or the server's own Retry-After) and it rejoins; a spent-day error benches it for an hour. If every account is cooling off, the call waits up to 90 seconds for the soonest one rather than raising. Only when all of them are spent does Cloudflare give up and let the chain fall through to Pollinations. The whole thing lives inside the one Cloudflare provider class &mdash; nothing above it knows more than one account exists.</div>
+        </details>
+      </div>
+    </div>
+
+    <div class="decision-row">
+      <div class="decision-index mono">10</div>
+      <div class="decision-body">
+        <div class="chip-line">
+          <div class="chip cause">Cloudflare's safety filter judges the finished image, not the prompt</div>
+          <div class="chip-arrow">&rarr;</div>
+          <div class="chip break">Harmless scenes got flagged, and one flag demoted the provider for the whole batch</div>
+          <div class="chip-arrow">&rarr;</div>
+          <div class="chip fix">Re-seed up to three times, then hand only that image onward</div>
+        </div>
+        <details class="more-detail"><summary>more</summary>
+          <div class="body">A cartoon fox in an office was flagged about 60% of the time in testing &mdash; enough to cut a five-image batch down to one. Because the check runs on the output, retrying the same seed is pointless but a different seed usually passes, so a flagged image is re-seeded up to three times. If it still fails, the refusal is raised as "this one request was rejected" rather than "this provider is down": the next provider draws just that image, and Cloudflare stays first in line. Treating a flag as an outage used to quietly move the rest of the batch onto a backend that ignores the character reference, so the character changed mid-video; the chain now also prints a loud warning whenever a backend ignored the reference.</div>
+        </details>
+      </div>
+    </div>
+
+    <div class="decision-row">
+      <div class="decision-index mono">11</div>
+      <div class="decision-body">
+        <div class="chip-line">
+          <div class="chip cause">A batch kept only the images before its first failure</div>
+          <div class="chip-arrow">&rarr;</div>
+          <div class="chip break">One 429 on image 4 threw away perfectly good images 5&ndash;12</div>
+          <div class="chip-arrow">&rarr;</div>
+          <div class="chip fix">Keep everything that rendered; list the empty slots, with times, for you to fill</div>
+        </div>
+        <details class="more-detail"><summary>more</summary>
+          <div class="body">The old assembly step trimmed the result to the unbroken run of successes and deleted every image after the first gap. Now every rendered image is kept and the failed slots travel with the job as a "missing" list &mdash; scene number, time window, what it was meant to show, and why it failed &mdash; which the UI prints as, say, "Scene 4 &mdash; 0:12&ndash;0:20". A checkbox, off by default, picks what happens to those holes: leave them empty so you can drop in your own picture, or cover them with repeats of images that worked, capped so no single frame holds the screen longer than 20 seconds.</div>
+        </details>
+      </div>
+    </div>
+
+    <div class="decision-row">
+      <div class="decision-index mono">12</div>
+      <div class="decision-body">
+        <div class="chip-line">
+          <div class="chip cause">A like/follow nudge needs to look like real app UI</div>
+          <div class="chip-arrow">&rarr;</div>
+          <div class="chip break">ffmpeg can't draw it, and a render that can run over an hour must not be risked on a garnish</div>
+          <div class="chip-arrow">&rarr;</div>
+          <div class="chip fix">Headless Chrome paints transparent frames; stitch overlays them; any failure just skips it</div>
+        </div>
+        <details class="more-detail"><summary>more</summary>
+          <div class="body">Each of the eight prompts is a pure function of time, so frame <i>i</i> is just "draw at <i>i</i>/30 seconds" &mdash; output is exact, repeatable, and the browser preview can't drift from the rendered clip. Frames are cached under a fingerprint that includes the design files themselves, so editing a design never reuses stale frames; a style costs about ten seconds of Chrome the first time and is free after. Start time and position are chosen automatically (roughly 60% in, at a sentence pause, clear of the captions and the app's own like/comment rail), and vertical 9:16 only &mdash; landscape renders skip it. The same philosophy as the outro card: optional, additive, and never able to take the render down with it.</div>
+        </details>
+      </div>
+    </div>
+
+    <div class="decision-row">
+      <div class="decision-index mono">13</div>
+      <div class="decision-body">
+        <div class="chip-line">
+          <div class="chip cause">edge-tts is an unofficial client of Microsoft's Read Aloud endpoint</div>
+          <div class="chip-arrow">&rarr;</div>
+          <div class="chip break">Microsoft rotated its login token; valid scripts began failing with "no audio"</div>
+          <div class="chip-arrow">&rarr;</div>
+          <div class="chip fix">Retry with backoff, then an error that names the exact upgrade</div>
+        </div>
+        <details class="more-detail"><summary>more</summary>
+          <div class="body">The failure was maddening because nothing about the script, voice or speed was wrong &mdash; the library itself had gone stale, and only a newer edge-tts (7.3.0 or later) can speak the new token. Each segment now gets three attempts with a growing delay, and if they all fail the error says which edge-tts version it found, what to run to upgrade it, and that a Kokoro voice works offline in the meantime. The message is kept plain ASCII with the token-bearing URL stripped out, because it travels through a Windows pipe to the UI.</div>
+        </details>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -681,8 +784,9 @@
     <div class="stack-strip">
       <b>STACK</b> &nbsp;Python 3.12 &middot; FastAPI &middot; React 19 &middot; Vite &middot; Tailwind v4 &middot; ffmpeg
       &nbsp;&mdash;&nbsp; <b>VOICE</b> edge-tts &middot; Kokoro-82M &middot; Parler &middot; or your own recording (Whisper)
-      &nbsp;&mdash;&nbsp; <b>IMAGES</b> Cloudflare Workers AI &middot; Pollinations &middot; FLUX.2 on Colab
+      &nbsp;&mdash;&nbsp; <b>IMAGES</b> Cloudflare Workers AI (multi&#8209;account) &middot; Pollinations &middot; FLUX.2 on Colab
       &nbsp;&mdash;&nbsp; <b>PLANNING</b> Groq
+      &nbsp;&mdash;&nbsp; <b>CTA PROMPT</b> Playwright &middot; headless Chrome
     </div>
     <p class="closing">
       <strong>Built solo, on free tiers only.</strong> Every gauge on this sheet was read off
