@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pipeline Blueprint</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,10 +15,11 @@
     --bg-panel:#E4ECE8;
     --bg-panel-2:#D8E3DD;
     --ink:#173040;
-    --ink-dim:#55707A;
-    --accent:#B8802E;
+    --ink-dim:#4C6772;
+    --accent:#B8802E;      /* marks, lines, needle — never body text */
+    --accent-ink:#845A18;  /* amber for TEXT: >= 4.5:1 on every panel */
     --accent-soft:#E4C793;
-    --accent-2:#B0503C;
+    --accent-2:#A24734;
     --good:#3D7A57;
     --border:rgba(23,48,64,0.22);
     --grid:rgba(23,48,64,0.07);
@@ -42,7 +48,7 @@
   }
   .mono{font-family:'IBM Plex Mono',Consolas,monospace;}
   p{margin:0;}
-  a{color:var(--accent);}
+  a{color:var(--accent-ink);}
   ::selection{background:var(--accent-soft);color:var(--ink);}
   :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
@@ -60,7 +66,7 @@
   .sheet-head{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:14px;}
   .sheet-num{
     font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.14em;
-    color:var(--accent);border:1px solid var(--border);padding:4px 10px;white-space:nowrap;
+    color:var(--accent-ink);border:1px solid var(--border);padding:4px 10px;white-space:nowrap;
     background:var(--bg);
   }
   .sheet-head h2{font-size:clamp(28px,4vw,44px);}
@@ -74,11 +80,11 @@
   /* ============ TITLE BLOCK (fixed corner) ============ */
   .titleblock{
     position:fixed;right:16px;bottom:16px;z-index:40;
-    font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;color:var(--ink-dim);
+    font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.5;color:var(--ink-dim);
     background:var(--bg-panel);border:1px solid var(--border);padding:8px 12px;
     box-shadow:2px 2px 0 var(--shadow);pointer-events:none;
   }
-  .titleblock b{color:var(--accent);letter-spacing:0.06em;}
+  .titleblock b{color:var(--accent-ink);letter-spacing:0.06em;}
   @media (max-width:640px){ .titleblock{display:none;} }
 
   /* ============ HERO ============ */
@@ -91,7 +97,7 @@
   }
   .eyebrow{
     display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.16em;
-    color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:4px;margin-bottom:26px;
+    color:var(--accent-ink);border-bottom:1px solid var(--accent);padding-bottom:4px;margin-bottom:26px;
   }
   .hero h1{font-size:clamp(40px,7.2vw,84px);line-height:0.98;max-width:16ch;}
   .hero-sub{max-width:58ch;font-size:18px;color:var(--ink-dim);margin:26px 0 0;}
@@ -100,6 +106,23 @@
   .hero-strip-row{display:flex;align-items:center;gap:28px;flex-wrap:wrap;}
   .diagram-scroll{overflow-x:auto;padding-bottom:6px;}
   .diagram-scroll svg{display:block;height:auto;color:var(--ink);}
+  /* The main schematic is 1700 units wide. It breaks out of the 1180px text column and scales to the
+     window (never past 1:1). Below 1240px it keeps a readable 1200px width and scrolls sideways. */
+  .diagram-wide{position:relative;left:50%;transform:translateX(-50%);width:min(1700px,calc(100vw - 48px));overflow-x:visible;}
+  .diagram-wide svg{width:100%;}
+  .diagram-wide figcaption{margin-left:max(0px,calc(50% - 562px));} /* realign the caption with the 1124px text column */
+  .diagram-wide .box-mono{font-size:14px;}
+  .diagram-wide .box-mono-dim{font-size:13.5px;}
+  .diagram-wide .label-strong{font-size:13.5px;}
+  .diagram-wide .gauge-cap{font-size:13px;}
+  .swipe-hint,.swipe-hint-sm{display:none;margin:14px 0 0;}
+  @media (max-width:1240px){
+    .diagram-wide{left:auto;transform:none;width:100%;overflow-x:auto;}
+    .diagram-wide svg{width:1200px;max-width:none;}
+    .swipe-hint{display:inline-flex;}
+  }
+  @media (max-width:700px){ .swipe-hint-sm{display:inline-flex;margin:6px 0 12px;} }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
   figure{margin:0;}
   figcaption{font-size:13px;color:var(--ink-dim);margin-top:12px;max-width:62ch;}
 
@@ -123,9 +146,9 @@
   .box-title{font-family:'Big Shoulders Stencil',sans-serif;font-weight:900;font-size:19px;fill:var(--ink);}
   .box-sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;fill:var(--ink-dim);}
   .box-mono{font-family:'IBM Plex Mono',monospace;font-size:12.5px;fill:var(--ink);}
-  .box-mono-dim{font-family:'IBM Plex Mono',monospace;font-size:11.5px;fill:var(--ink-dim);}
+  .box-mono-dim{font-family:'IBM Plex Mono',monospace;font-size:12px;fill:var(--ink-dim);}
   .tag-accent{fill:var(--accent);}
-  .label-strong{font-family:'IBM Plex Mono',monospace;font-size:12px;fill:var(--accent);}
+  .label-strong{font-family:'IBM Plex Mono',monospace;font-size:12px;fill:var(--accent-ink);}
   .valve-mark{fill:var(--ink);opacity:0.6;}
   .dashed{stroke-dasharray:5 6;}
   .arrow-line{fill:none;stroke:var(--ink);stroke-opacity:0.5;stroke-width:1.6;}
@@ -133,8 +156,8 @@
   .gauge-ring{fill:none;stroke:var(--ink);stroke-opacity:0.45;stroke-width:2;}
   .gauge-tick{stroke:var(--ink);stroke-opacity:0.35;stroke-width:1.5;}
   .gauge-needle{stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;}
-  .gauge-num{font-family:'IBM Plex Mono',monospace;font-weight:600;fill:var(--accent);}
-  .gauge-cap{font-family:'IBM Plex Mono',monospace;font-size:10.5px;fill:var(--ink-dim);letter-spacing:0.06em;}
+  .gauge-num{font-family:'IBM Plex Mono',monospace;font-weight:600;fill:var(--accent-ink);}
+  .gauge-cap{font-family:'IBM Plex Mono',monospace;font-size:12px;fill:var(--ink-dim);letter-spacing:0.06em;}
 
   /* ============ INSPECTOR (click-to-expand detail cards) ============ */
   .inspector-lead{
@@ -153,7 +176,7 @@
     font-family:'Big Shoulders Stencil',sans-serif;font-weight:900;font-size:17px;text-transform:uppercase;letter-spacing:0.02em;
   }
   .inspector-card summary .plus{
-    font-family:'IBM Plex Mono',monospace;color:var(--accent);font-size:16px;flex-shrink:0;
+    font-family:'IBM Plex Mono',monospace;color:var(--accent-ink);font-size:16px;flex-shrink:0;
     width:20px;height:20px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);
   }
   .inspector-card[open] summary .plus{transform:rotate(45deg);}
@@ -164,7 +187,7 @@
   .supply-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
   .supply-card{background:var(--bg);padding:28px 26px 26px;}
   .sheet.alt .supply-card{background:var(--bg-panel);}
-  .supply-kicker{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.14em;color:var(--ink-dim);}
+  .supply-kicker{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.14em;color:var(--ink-dim);}
   .supply-card h3{font-size:24px;margin-top:8px;}
   .supply-list{margin:16px 0 20px;font-size:14.5px;color:var(--ink-dim);}
   .supply-list b{color:var(--ink);font-weight:600;}
@@ -175,7 +198,7 @@
   .supply-meter .v{color:var(--ink);text-align:right;}
   .supply-meter .body{margin-top:10px;color:var(--ink-dim);font-family:'IBM Plex Sans',sans-serif;font-size:13.5px;}
   .supply-meter .body code{font-family:'IBM Plex Mono',monospace;color:var(--ink);background:var(--bg-panel-2);padding:1px 5px;}
-  .supply-cost{display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;color:var(--accent);font-size:13px;font-weight:600;margin-top:14px;}
+  .supply-cost{display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;color:var(--accent-ink);font-size:13px;font-weight:600;margin-top:14px;}
   .supply-cost .dot{width:8px;height:8px;border-radius:50%;background:var(--good);display:inline-block;}
 
   .honest-note{max-width:76ch;margin-top:44px;padding:20px 22px;border-left:3px solid var(--accent);background:var(--bg-panel);font-size:15px;color:var(--ink-dim);}
@@ -184,7 +207,7 @@
 
   /* ============ DECISION LOG ============ */
   .decision-row{display:grid;grid-template-columns:34px 1fr;gap:0 18px;margin-bottom:6px;}
-  .decision-index{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);padding-top:6px;}
+  .decision-index{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent-ink);padding-top:6px;}
   .decision-body{border-bottom:1px solid var(--border);padding:22px 0 26px;}
   .decision-row:last-of-type .decision-body{border-bottom:none;}
   .chip-line{display:flex;align-items:stretch;flex-wrap:wrap;gap:0;font-size:14px;}
@@ -197,7 +220,7 @@
   .fork-wrap{display:flex;flex-direction:column;gap:10px;flex:1 1 100%;}
   .fork-branch{display:flex;flex-wrap:wrap;}
   .more-detail{margin-top:14px;}
-  .more-detail summary{cursor:pointer;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent);display:inline-flex;align-items:center;gap:6px;}
+  .more-detail summary{cursor:pointer;list-style:none;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--accent-ink);display:inline-flex;align-items:center;gap:6px;}
   .more-detail summary::-webkit-details-marker{display:none;}
   .more-detail summary::before{content:"+";border:1px solid var(--accent);width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;}
   .more-detail[open] summary::before{content:"\2212";}
@@ -216,6 +239,8 @@
   footer .closing{max-width:60ch;font-size:15px;color:var(--ink-dim);}
   footer .closing strong{color:var(--ink);}
 </style>
+</head>
+<body>
 
 <div class="titleblock mono">
   DWG <b>SP&#8209;01</b> &middot; PIPELINE BLUEPRINT<br>
@@ -276,9 +301,12 @@
           <div class="gauge-cap" style="text-align:center;margin-top:-4px;">COST / RENDER<br>measured, not promised</div>
         </div>
       </div>
+      <div class="hint swipe-hint-sm"><span class="dot"></span>swipe the strip sideways &rarr;</div>
     </div>
   </div>
 </header>
+
+<main id="main">
 
 <!-- ============ SHEET 01 — THE LINE ============ -->
 <section class="sheet" id="sheet-line" data-sheet="01">
@@ -297,9 +325,9 @@
     </p>
     <div class="hint"><span class="dot"></span>hover any part of the diagram for a one-line note &mdash; the cards below go deeper</div>
 
-    <div class="diagram-scroll">
+    <div class="diagram-scroll diagram-wide" role="region" aria-label="Pipeline schematic (scrolls sideways on small screens)" tabindex="0">
       <figure>
-        <svg viewBox="0 0 1700 620" width="1700" height="620" role="img" aria-label="Schematic of the rendering pipeline: a script enters the voice stage, which offers four narration valves (edge and kokoro running locally, parler borrowed from a Colab GPU, or a recorded take transcribed by Whisper instead of synthesized); output feeds the captions stage, which can be bypassed entirely when captions are switched off; an optional like-and-follow prompt, painted by a headless browser, drops in beside it before the stitch stage; stickers, sound effects, music, and intro or outro clips merge in as inlets before the stitch stage, which produces the final MP4. A parallel branch below sends the same script to Groq for planning, then through a manifold of three image providers tried in automatic fallback order (the first, Cloudflare, rotating across up to five free accounts), feeding finished images back in as an inlet.">
+        <svg viewBox="0 0 1700 560" width="1700" height="560" role="img" aria-label="Schematic of the rendering pipeline: a script enters the voice stage, which offers four narration valves (edge and kokoro running locally, parler borrowed from a Colab GPU, or a recorded take transcribed by Whisper instead of synthesized); output feeds the captions stage, which can be bypassed entirely when captions are switched off; an optional like-and-follow prompt, painted by a headless browser, drops in beside it before the stitch stage; stickers, sound effects, music, and intro or outro clips merge in as inlets before the stitch stage, which produces the final MP4. A parallel branch below sends the same script to Groq for planning, then through a manifold of three image providers tried in automatic fallback order (the first, Cloudflare, rotating across up to five free accounts), feeding finished images back in as an inlet.">
           <defs>
             <marker id="arrowMain" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
               <path d="M0,0 L9,4.5 L0,9 Z" fill="var(--ink)" opacity="0.5"/>
@@ -327,7 +355,7 @@
             <text x="370" y="202" class="box-mono">parler &mdash; Colab GPU</text>
             <polygon points="352,222 362,217 362,227" class="valve-mark"/>
             <text x="370" y="226" class="box-mono">recorded &mdash; your mic</text>
-            <text x="370" y="242" class="box-mono-dim">(Whisper transcribes it)</text>
+            <text x="370" y="242" class="box-mono-dim" style="font-size:12.5px">(Whisper transcribes it)</text>
           </g>
 
           <path class="pipe-body" d="M555,180 H680"/>
@@ -396,14 +424,14 @@
           </g>
 
           <!-- ===== Parallel AI-image branch ===== -->
-          <text x="20" y="420" class="box-mono-dim">(same script, tapped)</text>
+          <text x="162" y="420" text-anchor="end" class="box-mono-dim" style="font-size:12.5px">(same script, tapped)</text>
           <path class="pipe-body dashed" d="M95,210 C 95,320 95,395 95,405" opacity="0.35"/>
 
           <g class="hotspot"><title>A free hosted LLM call plans the whole batch in one shot: how many images, what each shows, and roughly when &mdash; anchored to real elapsed time in the script, not guessed.</title>
             <rect x="170" y="390" width="170" height="70" class="box-fill box-line"/>
             <text x="255" y="418" text-anchor="middle" class="box-title" style="font-size:16px">GROQ</text>
-            <text x="255" y="436" text-anchor="middle" class="box-mono-dim">prompts + pacing</text>
-            <text x="255" y="450" text-anchor="middle" class="box-mono-dim">free LLM tier</text>
+            <text x="255" y="435" text-anchor="middle" class="box-mono-dim">prompts + pacing</text>
+            <text x="255" y="452" text-anchor="middle" class="box-mono-dim">free LLM tier</text>
           </g>
 
           <path class="pipe-body" d="M340,425 H460"/>
@@ -412,17 +440,17 @@
           <g class="hotspot"><title>Three interchangeable renderers, tried in order. Cloudflare first rotates across up to five free accounts; only when all are spent or throttled does a failure &mdash; a spent quota, a dead tunnel &mdash; fall through to the next provider instead of failing the batch. A one-off safety-filter flag hands just that image onward without demoting the provider.</title>
             <rect x="460" y="365" width="270" height="170" class="box-fill box-line"/>
             <text x="595" y="392" text-anchor="middle" class="box-title" style="font-size:15px">IMAGE PROVIDERS</text>
-            <polygon points="480,412 490,407 490,417" class="tag-accent"/>
-            <text x="498" y="416" class="box-mono">cloudflare &mdash; tried first</text>
-            <text x="498" y="429" class="box-mono-dim">rotates up to 5 accounts</text>
-            <polygon points="480,442 490,437 490,447" class="tag-accent"/>
-            <text x="498" y="446" class="box-mono">pollinations &mdash; then</text>
-            <text x="498" y="459" class="box-mono-dim">no key &middot; slower per image</text>
-            <polygon points="480,472 490,467 490,477" style="fill:var(--accent-2)"/>
-            <text x="498" y="476" class="box-mono">colab &middot; flux &mdash; last</text>
-            <text x="498" y="489" class="box-mono-dim">needs your session running</text>
-            <path d="M700,410 C 725,425 725,455 700,470" class="arrow-line dashed" opacity="0.5"/>
-            <text x="595" y="516" text-anchor="middle" class="box-mono-dim">auto-fallback on any failure</text>
+            <polygon points="480,410 490,405 490,415" class="tag-accent"/>
+            <text x="498" y="414" class="box-mono">cloudflare &mdash; tried first</text>
+            <text x="498" y="431" class="box-mono-dim">rotates up to 5 accounts</text>
+            <polygon points="480,446 490,441 490,451" class="tag-accent"/>
+            <text x="498" y="450" class="box-mono">pollinations &mdash; then</text>
+            <text x="498" y="467" class="box-mono-dim">no key &middot; slower per image</text>
+            <polygon points="480,482 490,477 490,487" style="fill:var(--accent-2)"/>
+            <text x="498" y="486" class="box-mono">colab &middot; flux &mdash; last</text>
+            <text x="498" y="503" class="box-mono-dim">needs your session running</text>
+            <path d="M700,408 C 728,428 728,468 700,488" class="arrow-line dashed" opacity="0.5"/>
+            <text x="595" y="524" text-anchor="middle" class="box-mono-dim">auto-fallback on any failure</text>
           </g>
 
           <path d="M730,450 H800 V345 H835" class="pipe-body" fill="none"/>
@@ -435,6 +463,7 @@
         </figcaption>
       </figure>
     </div>
+    <div class="hint swipe-hint"><span class="dot"></span>swipe sideways to follow the whole line &rarr;</div>
 
     <div class="inspector-lead">click a part to read what it actually does</div>
     <div class="inspector-grid">
@@ -581,7 +610,7 @@
         <div class="chip-line">
           <div class="chip cause">Sticker images lived in a server-side library</div>
           <div class="chip-arrow">&rarr;</div>
-          <div class="chip break">People wanted to place their <em>own</em> images</div>
+          <div class="chip break"><span>People wanted to place their <em>own</em> images</span></div>
           <div class="chip-arrow">&rarr;</div>
           <div class="chip fix">Pivoted to session-only browser uploads</div>
         </div>
@@ -779,6 +808,8 @@
   </div>
 </section>
 
+</main>
+
 <footer>
   <div class="wrap">
     <div class="stack-strip">
@@ -809,3 +840,5 @@
     sections.forEach(function(s){ io.observe(s); });
   })();
 </script>
+</body>
+</html>
